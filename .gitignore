@@ -1,0 +1,31 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+vendor/
+node_modules/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# macOS files
+.DS_Store
+
+# Logs and temporary files
+*.log
+tmp/
+temp/
+cache/
+
+# PHPUnit coverage
+coverage/
+.phpunit.result.cache
+
+# Uploaded/runtime files
+uploads/*
+!uploads/.gitkeep
