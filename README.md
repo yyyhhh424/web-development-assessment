@@ -1,15 +1,14 @@
-Web Developer Technical Assessment
+# Web Developer Technical Assessment
 
 This repository contains three assessment tasks:
 
-An Entity Relationship Diagram for an e-commerce system
+1. An Entity Relationship Diagram for an e-commerce system
+2. A PHP/MySQL to-do list application with CRUD actions
+3. A completed browser-based Reversi game
 
-A PHP/MySQL to-do list application with CRUD actions
+## Repository Structure
 
-A completed browser-based Reversi game
-
-Repository Structure
-
+```text
 .
 ├── 01-erd/
 │   ├── ecommerce-erd.md
@@ -32,371 +31,416 @@ Repository Structure
 ├── .env.example
 ├── .gitignore
 └── README.md
+```
 
-Task 1: E-commerce ERD
+## Task 1: E-commerce ERD
 
 The e-commerce database design includes the following main entities:
 
-Customers
-
-Customer addresses
-
-Categories
-
-Products
-
-Orders
-
-Order items
-
-Payments
-
-Shipments
-
-Product reviews
+- Customers
+- Customer addresses
+- Categories
+- Products
+- Orders
+- Order items
+- Payments
+- Shipments
+- Product reviews
 
 The ERD image is located at:
 
+```text
 01-erd/ecommerce-erd.png
+```
 
 The MySQL database schema is located at:
 
+```text
 01-erd/ecommerce-schema.sql
+```
 
 To import the e-commerce schema into MySQL:
 
+```bash
 mysql -u root -p < 01-erd/ecommerce-schema.sql
+```
 
-Task 2: PHP/MySQL To-do List
+## Task 2: PHP/MySQL To-do List
 
-Features
+### Features
 
-Create a new task
+- Create a new task
+- View all tasks
+- Edit an existing task
+- Delete a task
+- Mark a task as completed
+- Reopen a completed task
+- Filter tasks by status
+- Server-side form validation
+- PDO prepared statements
+- CSRF protection
+- Escaped output to reduce XSS risk
+- Responsive user interface
 
-View all tasks
+## Running the To-do Application Without Docker
 
-Edit an existing task
-
-Delete a task
-
-Mark a task as completed
-
-Reopen a completed task
-
-Filter tasks by status
-
-Server-side form validation
-
-PDO prepared statements
-
-CSRF protection
-
-Escaped output to reduce XSS risk
-
-Responsive user interface
-
-Running the To-do Application Without Docker
-
-Requirements
+### Requirements
 
 Install the following software before running the application:
 
-PHP 8.1 or later
+- PHP 8.1 or later
+- MySQL 8 or later
+- PHP PDO MySQL extension
 
-MySQL 8 or later
-
-PHP PDO MySQL extension
-
-macOS Installation
+### macOS Installation
 
 The following instructions use Homebrew.
 
 Check whether Homebrew is installed:
 
+```bash
 brew --version
+```
 
 Install PHP and MySQL:
 
+```bash
 brew install php mysql
+```
 
 Start the MySQL service:
 
+```bash
 brew services start mysql
+```
 
 Check that PHP and MySQL are available:
 
+```bash
 php -v
 mysql --version
+```
 
-Step 1: Open the Project Folder
+### Step 1: Open the Project Folder
 
 Open Terminal and go to the repository folder:
 
+```bash
 cd ~/Downloads/ecommerce-assessment
+```
 
 Change the path if the project is stored in another folder.
 
 Confirm that the project files are present:
 
+```bash
 ls
+```
 
 You should see folders such as:
 
+```text
 01-erd
 02-todo-app
 03-reversi
+```
 
-Step 2: Start MySQL
+### Step 2: Start MySQL
 
 Start MySQL if it is not already running:
 
+```bash
 brew services start mysql
+```
 
 Test the MySQL connection:
 
+```bash
 mysql -u root
+```
 
 If the MySQL root account has a password, use:
 
+```bash
 mysql -u root -p
+```
 
 Type the following command to exit MySQL:
 
+```sql
 exit;
+```
 
-Step 3: Create the To-do Database
+### Step 3: Create the To-do Database
 
 From the repository root, run:
 
+```bash
 mysql -u root -p < 02-todo-app/sql/001_create_tasks.sql
+```
 
 If the MySQL root account does not have a password, run:
 
+```bash
 mysql -u root < 02-todo-app/sql/001_create_tasks.sql
+```
 
 The SQL file creates the database and the tasks table required by the application.
 
-Step 4: Create the Environment File
+### Step 4: Create the Environment File
 
 Copy the example environment file:
 
+```bash
 cp .env.example .env
+```
 
-Open .env using a text editor:
+Open `.env` using a text editor:
 
+```bash
 open -e .env
+```
 
 Set the local MySQL details:
 
+```dotenv
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=todo_app
 DB_USERNAME=root
 DB_PASSWORD=
+```
 
-If the MySQL root account has a password, enter it after DB_PASSWORD=:
+If the MySQL root account has a password, enter it after `DB_PASSWORD=`:
 
+```dotenv
 DB_PASSWORD=your_mysql_password
+```
 
 Save the file after editing it.
 
-Step 5: Start the PHP Development Server
+### Step 5: Start the PHP Development Server
 
 From the repository root, run:
 
+```bash
 php -S localhost:8080 -t 02-todo-app/public
+```
 
 A successful start should display a message similar to:
 
+```text
 PHP Development Server started at http://localhost:8080
+```
 
 Keep the Terminal window open while using the application.
 
-Step 6: Open the Application
+### Step 6: Open the Application
 
 Open the following address in a browser:
 
+```text
 http://localhost:8080
+```
 
-Stop the Application
+### Stop the Application
 
 Return to the Terminal window running the PHP server and press:
 
+```text
 Control + C
+```
 
-Start the Application Again
+### Start the Application Again
 
 The database only needs to be imported once. For later runs:
 
+```bash
 cd ~/Downloads/ecommerce-assessment
 brew services start mysql
 php -S localhost:8080 -t 02-todo-app/public
+```
 
 Then open:
 
+```text
 http://localhost:8080
+```
 
-Common Problems
+## Common Problems
 
-zsh: command not found: php
+### `zsh: command not found: php`
 
 Install PHP:
 
+```bash
 brew install php
+```
 
 Close and reopen Terminal, then check:
 
+```bash
 php -v
+```
 
-zsh: command not found: mysql
+### `zsh: command not found: mysql`
 
 Install MySQL:
 
+```bash
 brew install mysql
+```
 
 Then start it:
 
+```bash
 brew services start mysql
+```
 
-Connection refused or SQLSTATE[HY000] [2002]
+### `Connection refused` or `SQLSTATE[HY000] [2002]`
 
 Make sure MySQL is running:
 
+```bash
 brew services start mysql
+```
 
 Check the service status:
 
+```bash
 brew services list
+```
 
-Access denied for user 'root'
+### `Access denied for user 'root'`
 
-The username or password in .env does not match the local MySQL account. Update these values:
+The username or password in `.env` does not match the local MySQL account. Update these values:
 
+```dotenv
 DB_USERNAME=root
 DB_PASSWORD=your_mysql_password
+```
 
-Unknown database 'todo_app'
+### `Unknown database 'todo_app'`
 
 Import the database again:
 
+```bash
 mysql -u root -p < 02-todo-app/sql/001_create_tasks.sql
+```
 
-Port 8080 is already in use
+### Port 8080 is already in use
 
 Use another port, for example 8081:
 
+```bash
 php -S localhost:8081 -t 02-todo-app/public
+```
 
 Then open:
 
+```text
 http://localhost:8081
+```
 
-Task 3: Reversi Game
+## Task 3: Reversi Game
 
 The Reversi game does not require PHP or MySQL.
 
 Open it directly from Terminal:
 
+```bash
 cd ~/Downloads/ecommerce-assessment
 open 03-reversi/reversi-game.html
+```
 
 It can also be opened by double-clicking this file in Finder:
 
+```text
 03-reversi/reversi-game.html
+```
 
 The game includes:
 
-Legal move validation
-
-Opponent piece flipping
-
-Victory detection
-
-Draw detection
-
-Available move indicators
-
-Live score display
-
-Undo function
-
-Suggested move function
-
-Player-versus-player mode
-
-Player-versus-computer mode
-
-Automatic pass handling when no valid move is available
+- Legal move validation
+- Opponent piece flipping
+- Victory detection
+- Draw detection
+- Available move indicators
+- Live score display
+- Undo function
+- Suggested move function
+- Player-versus-player mode
+- Player-versus-computer mode
+- Automatic pass handling when no valid move is available
 
 The Vue library is loaded from a CDN, so an internet connection is required when opening the game.
 
-Environment File Policy
+## Environment File Policy
 
-The .env file contains local database credentials and must not be uploaded to GitHub.
+The `.env` file contains local database credentials and must not be uploaded to GitHub.
 
 The repository includes:
 
+```text
 .env.example
+```
 
 Each user should copy it locally:
 
+```bash
 cp .env.example .env
+```
 
-The .gitignore file excludes .env from Git tracking.
+The `.gitignore` file excludes `.env` from Git tracking.
 
-Before uploading the repository, confirm that .env is not being tracked:
+Before uploading the repository, confirm that `.env` is not being tracked:
 
+```bash
 git status
+```
 
 Do not use this command:
 
+```bash
 git add -f .env
+```
 
-Uploading to GitHub
+## Uploading to GitHub
 
 Create an empty GitHub repository, then run the following commands from the project folder:
 
+```bash
 git init
 git add .
 git commit -m "Complete web developer technical assessment"
 git branch -M main
 git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
 git push -u origin main
+```
 
 Replace the repository address with the actual GitHub repository URL.
 
-Technology Used
+## Technology Used
 
-PHP
+- PHP
+- MySQL
+- PDO
+- HTML
+- CSS
+- JavaScript
+- Vue.js
+- Mermaid ERD syntax
 
-MySQL
-
-PDO
-
-HTML
-
-CSS
-
-JavaScript
-
-Vue.js
-
-Mermaid ERD syntax
-
-Security Considerations
+## Security Considerations
 
 The to-do application uses:
 
-PDO prepared statements for database queries
+- PDO prepared statements for database queries
+- CSRF tokens for form submissions
+- Server-side validation
+- HTML output escaping
+- Environment variables for database credentials
 
-CSRF tokens for form submissions
-
-Server-side validation
-
-HTML output escaping
-
-Environment variables for database credentials
-
-Assessment Notes
+## Assessment Notes
 
 The PHP/MySQL task is implemented using structured plain PHP instead of a full PHP framework. The project separates configuration, database access, repository logic, views, and the public entry point to keep the code clear and easy to review.
