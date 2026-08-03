@@ -10,7 +10,7 @@ A complete technical assessment repository containing:
 
 | Folder | Deliverable | Main file |
 |---|---|---|
-| `01-erd` | E-commerce ERD and MySQL schema | `ecommerce-erd.png` |
+| `01-ecommerce` | E-commerce ERD and MySQL schema | `ecommerce-erd.png` |
 | `02-todo-app` | PHP/MySQL CRUD to-do application | `public/index.php` |
 | `03-reversi` | Completed Reversi game | `reversi-game.html` |
 
