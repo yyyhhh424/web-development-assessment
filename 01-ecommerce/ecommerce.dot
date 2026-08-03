@@ -1,25 +1,52 @@
 digraph ERD {
-  graph [rankdir=LR, bgcolor="white", pad="0.3", nodesep="0.55", ranksep="0.9"];
+  graph [rankdir=LR, bgcolor="white", pad="0.3", nodesep="0.5", ranksep="0.85"];
   node [shape=record, fontname="Arial", fontsize=10, style="rounded,filled", fillcolor="#f6faf7", color="#245b3d"];
   edge [fontname="Arial", fontsize=9, color="#4a6655"];
+
   customers [label="{CUSTOMERS|PK id\lname\lemail (UQ)\lpassword_hash\lphone\l}"];
   addresses [label="{ADDRESSES|PK id\lFK customer_id\lrecipient_name\lline1\lcity/state/postcode/country\lis_default\l}"];
   categories [label="{CATEGORIES|PK id\lFK parent_id\lname\lslug (UQ)\ldescription\l}"];
   products [label="{PRODUCTS|PK id\lFK category_id\lsku (UQ)\lname\lprice\lstock_quantity\lis_active\l}"];
-  orders [label="{ORDERS|PK id\lFK customer_id\lFK shipping_address_id\lorder_number (UQ)\lstatus\ltotal_amount\lordered_at\l}"];
-  order_items [label="{ORDER_ITEMS|PK id\lFK order_id\lFK product_id\lproduct_name\lunit_price\lquantity\lline_total\l}"];
+  product_images [label="{PRODUCT_IMAGES|PK id\lFK product_id\limage_url\lsort_order\lis_primary\l}"];
+  product_variants [label="{PRODUCT_VARIANTS|PK id\lFK product_id\lsku (UQ)\lvariant_name\lprice_adjustment\lstock_quantity\l}"];
+  tags [label="{TAGS|PK id\lname\lslug (UQ)\l}"];
+  product_tags [label="{PRODUCT_TAGS|PK/FK product_id\lPK/FK tag_id\l}"];
+  carts [label="{CARTS|PK id\lFK customer_id (UQ)\lcreated_at\lupdated_at\l}"];
+  cart_items [label="{CART_ITEMS|PK id\lFK cart_id\lFK product_id\lFK variant_id\lquantity\ladded_at\l}"];
+  wishlists [label="{WISHLISTS|PK id\lFK customer_id\lFK product_id\ladded_at\l}"];
+  coupons [label="{COUPONS|PK id\lcode (UQ)\ldiscount_type\ldiscount_value\lmin_order_amount\lstarts_at\lexpires_at\lusage_limit\ltimes_used\l}"];
+  orders [label="{ORDERS|PK id\lFK customer_id\lFK shipping_address_id\lFK billing_address_id\lFK coupon_id\lorder_number (UQ)\lstatus\ltotal_amount\lordered_at\l}"];
+  order_items [label="{ORDER_ITEMS|PK id\lFK order_id\lFK product_id\lFK variant_id\lproduct_name\lunit_price\lquantity\lline_total\l}"];
+  order_status_history [label="{ORDER_STATUS_HISTORY|PK id\lFK order_id\lstatus\lnote\lchanged_at\l}"];
   payments [label="{PAYMENTS|PK id\lFK order_id\lprovider\ltransaction_reference (UQ)\lamount\lstatus\lpaid_at\l}"];
+  refunds [label="{REFUNDS|PK id\lFK payment_id\lamount\lreason\lstatus\lrefunded_at\l}"];
   shipments [label="{SHIPMENTS|PK id\lFK order_id (UQ)\lcourier\ltracking_number\lstatus\l}"];
   reviews [label="{REVIEWS|PK id\lFK customer_id\lFK product_id\lrating\ltitle\lcomment\l}"];
+
   customers -> addresses [label="1 : many"];
   customers -> orders [label="1 : many"];
   customers -> reviews [label="1 : many"];
+  customers -> carts [label="1 : 0..1"];
+  customers -> wishlists [label="1 : many"];
   categories -> categories [label="parent"];
   categories -> products [label="1 : many"];
-  addresses -> orders [label="1 : many"];
-  orders -> order_items [label="1 : many"];
+  products -> product_images [label="1 : many"];
+  products -> product_variants [label="1 : many"];
   products -> order_items [label="1 : many"];
+  products -> cart_items [label="1 : many"];
+  products -> reviews [label="1 : many"];
+  products -> wishlists [label="1 : many"];
+  products -> product_tags [label="1 : many"];
+  tags -> product_tags [label="1 : many"];
+  product_variants -> order_items [label="1 : many"];
+  product_variants -> cart_items [label="1 : many"];
+  carts -> cart_items [label="1 : many"];
+  orders -> order_items [label="1 : many"];
   orders -> payments [label="1 : many"];
   orders -> shipments [label="1 : 0..1"];
-  products -> reviews [label="1 : many"];
+  orders -> order_status_history [label="1 : many"];
+  coupons -> orders [label="0..1 : many"];
+  addresses -> orders [label="1 : many (ship)"];
+  addresses -> orders [label="1 : many (bill)"];
+  payments -> refunds [label="1 : many"];
 }
