@@ -29,9 +29,9 @@ erDiagram
     PAYMENTS ||--o{ REFUNDS : has
 
     CUSTOMERS {
-        bigint id PK
+        int id PK
         varchar name
-        varchar email UK
+        varchar email 
         varchar password_hash
         varchar phone
         timestamp created_at
@@ -39,8 +39,8 @@ erDiagram
     }
 
     ADDRESSES {
-        bigint id PK
-        bigint customer_id FK
+        int id PK
+        int customer_id FK
         varchar recipient_name
         varchar line1
         varchar line2
@@ -52,20 +52,20 @@ erDiagram
     }
 
     CATEGORIES {
-        bigint id PK
-        bigint parent_id FK
+        int id PK
+        int parent_id FK
         varchar name
-        varchar slug UK
+        varchar slug 
         text description
     }
 
     PRODUCTS {
-        bigint id PK
-        bigint category_id FK
-        varchar sku UK
+        int id PK
+        int category_id FK
+        varchar sku 
         varchar name
         text description
-        decimal price
+        double price
         int stock_quantity
         boolean is_active
         timestamp created_at
@@ -73,59 +73,59 @@ erDiagram
     }
 
     PRODUCT_IMAGES {
-        bigint id PK
-        bigint product_id FK
+        int id PK
+        int product_id FK
         varchar image_url
         int sort_order
         boolean is_primary
     }
 
     PRODUCT_VARIANTS {
-        bigint id PK
-        bigint product_id FK
-        varchar sku UK
+        int id PK
+        int product_id FK
+        varchar sku 
         varchar variant_name
         decimal price_adjustment
         int stock_quantity
     }
 
     TAGS {
-        bigint id PK
+        int id PK
         varchar name
-        varchar slug UK
+        varchar slug 
     }
 
     PRODUCT_TAGS {
-        bigint product_id FK
-        bigint tag_id FK
+        int product_id FK
+        int tag_id FK
     }
 
     CARTS {
-        bigint id PK
-        bigint customer_id FK, UK
+        int id PK
+        int customer_id FK
         timestamp created_at
         timestamp updated_at
     }
 
     CART_ITEMS {
-        bigint id PK
-        bigint cart_id FK
-        bigint product_id FK
-        bigint variant_id FK
+        int id PK
+        int cart_id FK
+        int product_id FK
+        int variant_id FK
         int quantity
         timestamp added_at
     }
 
     WISHLISTS {
-        bigint id PK
-        bigint customer_id FK
-        bigint product_id FK
+        int id PK
+        int customer_id FK
+        int product_id FK
         timestamp added_at
     }
 
     COUPONS {
-        bigint id PK
-        varchar code UK
+        int id PK
+        varchar code 
         varchar description
         varchar discount_type
         decimal discount_value
@@ -137,62 +137,62 @@ erDiagram
     }
 
     ORDERS {
-        bigint id PK
-        bigint customer_id FK
-        bigint shipping_address_id FK
-        bigint billing_address_id FK
-        bigint coupon_id FK
-        varchar order_number UK
+        int id PK
+        int customer_id FK
+        int shipping_address_id FK
+        int billing_address_id FK
+        int coupon_id FK
+        varchar order_number 
         varchar status
-        decimal subtotal
-        decimal shipping_fee
-        decimal tax_amount
-        decimal discount_amount
-        decimal total_amount
+        double subtotal
+        double shipping_fee
+        double tax_amount
+        double discount_amount
+        double total_amount
         timestamp ordered_at
     }
 
     ORDER_ITEMS {
-        bigint id PK
-        bigint order_id FK
-        bigint product_id FK
-        bigint variant_id FK
+        int id PK
+        int order_id FK
+        int product_id FK
+        int variant_id FK
         varchar product_name
-        decimal unit_price
+        double unit_price
         int quantity
-        decimal line_total
+        double line_total
     }
 
     ORDER_STATUS_HISTORY {
-        bigint id PK
-        bigint order_id FK
+        int id PK
+        int order_id FK
         varchar status
         varchar note
         timestamp changed_at
     }
 
     PAYMENTS {
-        bigint id PK
-        bigint order_id FK
+        int id PK
+        int order_id FK
         varchar provider
         varchar transaction_reference UK
-        decimal amount
+        double amount
         varchar status
         timestamp paid_at
     }
 
     REFUNDS {
-        bigint id PK
-        bigint payment_id FK
-        decimal amount
+        int id PK
+        int payment_id FK
+        double amount
         varchar reason
         varchar status
         timestamp refunded_at
     }
 
     SHIPMENTS {
-        bigint id PK
-        bigint order_id FK, UK
+        int id PK
+        int order_id FK
         varchar courier
         varchar tracking_number
         varchar status
@@ -201,10 +201,10 @@ erDiagram
     }
 
     REVIEWS {
-        bigint id PK
-        bigint customer_id FK
-        bigint product_id FK
-        tinyint rating
+        int id PK
+        int customer_id FK
+        int product_id FK
+        int rating
         varchar title
         text comment
         timestamp created_at
