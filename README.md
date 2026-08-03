@@ -60,9 +60,9 @@ The e-commerce database design includes:
 
 Files:
 
-- ERD image: `01-erd/ecommerce-erd.png`
-- Mermaid ERD source: `01-erd/ecommerce-erd.md`
-- MySQL schema: `01-erd/ecommerce-schema.sql`
+- ERD image: `01-ecommerce/erd.png`
+- Mermaid ERD source: `01-ecoomerce/README.md`
+- MySQL schema: `01-ecommerce/schema.sql`
 
 ---
 
